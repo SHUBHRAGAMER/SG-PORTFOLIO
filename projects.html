@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Shubhra Gautam</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dark-theme">
+    <nav class="navbar">
+        <div class="nav-brand">Shubhra Gautam</div>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="about.html"><i class="fas fa-user"></i> About</a></li>
+            <li><a href="projects.html" class="active"><i class="fas fa-code"></i> Projects</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <main>
+        <section class="projects">
+            <h1>My Projects</h1>
+            <p class="section-desc">Here are some of my favorite projects. Click on any project to view its code.</p>
+
+            <div class="project-grid">
+                <!-- Indus Battle Royale -->
+                <div class="project-card">
+                    <img src="images/placeholder.jpg" alt="Indus Battle Royale">
+                    <h3>Indus Battle Royale</h3>
+                    <p>Contributed to the development of this exciting battle royale game with SuperGaming.</p>
+                    <div class="project-links">
+                        <a href="#" class="btn secondary">View Project</a>
+                    </div>
+                </div>
+
+                <!-- Python Calculator -->
+                <div class="project-card">
+                    <img src="images/placeholder.jpg" alt="Python Calculator">
+                    <h3>Python Calculator</h3>
+                    <p>A feature-rich calculator with scientific functions.</p>
+                    <div class="code-block">
+                        <pre><code class="language-python">
+import tkinter as tk
+from math import *
+
+class Calculator:
+    def __init__(self):
+        self.window = tk.Tk()
+        self.window.title("Scientific Calculator")
+        self.display = tk.Entry(self.window, width=30)
+        self.display.grid(row=0, column=0, columnspan=4)
+        
+        # Add buttons
+        buttons = [
+            '7', '8', '9', '/',
+            '4', '5', '6', '*',
+            '1', '2', '3', '-',
+            '0', '.', '=', '+'
+        ]
+        
+        row = 1
+        col = 0
+        for button in buttons:
+            cmd = lambda x=button: self.click(x)
+            tk.Button(self.window, text=button, command=cmd).grid(row=row, column=col)
+            col += 1
+            if col > 3:
+                col = 0
+                row += 1
+    
+    def click(self, key):
+        if key == '=':
+            try:
+                result = eval(self.display.get())
+                self.display.delete(0, tk.END)
+                self.display.insert(tk.END, str(result))
+            except:
+                self.display.delete(0, tk.END)
+                self.display.insert(tk.END, "Error")
+        else:
+            self.display.insert(tk.END, key)
+
+if __name__ == "__main__":
+    calc = Calculator()
+    calc.window.mainloop()
+                        </code></pre>
+                        <button class="copy-btn" data-code-target="calculator">Copy Code</button>
+                    </div>
+                </div>
+
+                <!-- Snake Game -->
+                <div class="project-card">
+                    <img src="images/placeholder.jpg" alt="Snake Game">
+                    <h3>Python Snake Game</h3>
+                    <p>Classic snake game implemented in Python using Pygame.</p>
+                    <div class="code-block">
+                        <pre><code class="language-python">
+import pygame
+import random
+
+# Initialize Pygame
+pygame.init()
+
+# Set up the game window
+width = 800
+height = 600
+window = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Snake Game")
+
+# Colors
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+
+# Snake and food
+snake_block = 20
+snake_speed = 15
+
+# Initialize clock
+clock = pygame.time.Clock()
+
+def our_snake(snake_block, snake_list):
+    for x in snake_list:
+        pygame.draw.rect(window, GREEN, [x[0], x[1], snake_block, snake_block])
+
+def gameLoop():
+    game_over = False
+    game_close = False
+
+    x1 = width / 2
+    y1 = height / 2
+
+    x1_change = 0
+    y1_change = 0
+
+    snake_List = []
+    Length_of_snake = 1
+
+    foodx = round(random.randrange(0, width - snake_block) / 20.0) * 20.0
+    foody = round(random.randrange(0, height - snake_block) / 20.0) * 20.0
+
+    while not game_over:
+        while game_close == True:
+            window.fill(BLACK)
+            font = pygame.font.SysFont(None, 50)
+            text = font.render("Game Over! Press Q-Quit or C-Play Again", True, WHITE)
+            window.blit(text, [width / 6, height / 3])
+            pygame.display.update()
+
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_q:
+                        game_over = True
+                        game_close = False
+                    if event.key == pygame.K_c:
+                        gameLoop()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game_over = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    x1_change = -snake_block
+                    y1_change = 0
+                elif event.key == pygame.K_RIGHT:
+                    x1_change = snake_block
+                    y1_change = 0
+                elif event.key == pygame.K_UP:
+                    y1_change = -snake_block
+                    x1_change = 0
+                elif event.key == pygame.K_DOWN:
+                    y1_change = snake_block
+                    x1_change = 0
+
+        if x1 >= width or x1 < 0 or y1 >= height or y1 < 0:
+            game_close = True
+
+        x1 += x1_change
+        y1 += y1_change
+        window.fill(BLACK)
+        pygame.draw.rect(window, RED, [foodx, foody, snake_block, snake_block])
+        snake_Head = []
+        snake_Head.append(x1)
+        snake_Head.append(y1)
+        snake_List.append(snake_Head)
+        if len(snake_List) > Length_of_snake:
+            del snake_List[0]
+
+        for x in snake_List[:-1]:
+            if x == snake_Head:
+                game_close = True
+
+        our_snake(snake_block, snake_List)
+        pygame.display.update()
+
+        if x1 == foodx and y1 == foody:
+            foodx = round(random.randrange(0, width - snake_block) / 20.0) * 20.0
+            foody = round(random.randrange(0, height - snake_block) / 20.0) * 20.0
+            Length_of_snake += 1
+
+        clock.tick(snake_speed)
+
+    pygame.quit()
+    quit()
+
+gameLoop()
+                        </code></pre>
+                        <button class="copy-btn" data-code-target="snake">Copy Code</button>
+                    </div>
+                </div>
+
+                <!-- File Organizer -->
+                <div class="project-card">
+                    <img src="images/placeholder.jpg" alt="File Organizer">
+                    <h3>File Organizer</h3>
+                    <p>Python script to automatically organize files by type.</p>
+                    <div class="code-block">
+                        <pre><code class="language-python">
+import os
+import shutil
+from pathlib import Path
+
+def organize_files(directory):
+    # Define file types and their corresponding folders
+    DIRECTORIES = {
+        "IMAGES": [".jpg", ".jpeg", ".png", ".gif", ".bmp"],
+        "DOCUMENTS": [".pdf", ".doc", ".docx", ".txt", ".xlsx", ".pptx"],
+        "AUDIO": [".mp3", ".wav", ".flac"],
+        "VIDEO": [".mp4", ".avi", ".mkv"],
+        "ARCHIVES": [".zip", ".rar", ".7z"]
+    }
+
+    # Create directories if they don't exist
+    for folder_name in DIRECTORIES:
+        folder_path = os.path.join(directory, folder_name)
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+
+    # Scan and move files
+    for item in os.scandir(directory):
+        if item.is_file():
+            file_extension = Path(item.name).suffix.lower()
+            
+            # Find the appropriate folder for the file
+            for folder_name, extensions in DIRECTORIES.items():
+                if file_extension in extensions:
+                    source = item.path
+                    destination = os.path.join(directory, folder_name, item.name)
+                    
+                    # Move the file
+                    try:
+                        shutil.move(source, destination)
+                        print(f"Moved {item.name} to {folder_name}")
+                    except Exception as e:
+                        print(f"Error moving {item.name}: {str(e)}")
+                    break
+
+if __name__ == "__main__":
+    # Replace with your directory path
+    directory_to_organize = "path/to/your/directory"
+    organize_files(directory_to_organize)
+                        </code></pre>
+                        <button class="copy-btn" data-code-target="organizer">Copy Code</button>
+                    </div>
+                </div>
+
+                <!-- Weather App -->
+                <div class="project-card">
+                    <img src="images/placeholder.jpg" alt="Weather App">
+                    <h3>Weather App</h3>
+                    <p>Simple weather application using OpenWeatherMap API.</p>
+                    <div class="code-block">
+                        <pre><code class="language-python">
+import requests
+import json
+from datetime import datetime
+
+class WeatherApp:
+    def __init__(self, api_key):
+        self.api_key = api_key
+        self.base_url = "http://api.openweathermap.org/data/2.5/weather"
+
+    def get_weather(self, city):
+        try:
+            # Make API request
+            params = {
+                "q": city,
+                "appid": self.api_key,
+                "units": "metric"  # For Celsius
+            }
+            
+            response = requests.get(self.base_url, params=params)
+            response.raise_for_status()
+            
+            # Parse response
+            weather_data = response.json()
+            
+            # Extract relevant information
+            temperature = weather_data["main"]["temp"]
+            humidity = weather_data["main"]["humidity"]
+            description = weather_data["weather"][0]["description"]
+            wind_speed = weather_data["wind"]["speed"]
+            
+            # Format output
+            weather_info = f"""
+Weather in {city}:
+Temperature: {temperature}°C
+Humidity: {humidity}%
+Conditions: {description.capitalize()}
+Wind Speed: {wind_speed} m/s
+Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+            """
+            
+            return weather_info
+            
+        except requests.exceptions.RequestException as e:
+            return f"Error fetching weather data: {str(e)}"
+        except KeyError as e:
+            return f"Error parsing weather data: {str(e)}"
+
+def main():
+    # Replace with your OpenWeatherMap API key
+    api_key = "your_api_key_here"
+    weather_app = WeatherApp(api_key)
+    
+    while True:
+        city = input("Enter city name (or 'quit' to exit): ")
+        if city.lower() == 'quit':
+            break
+            
+        print(weather_app.get_weather(city))
+        print("-" * 50)
+
+if __name__ == "__main__":
+    main()
+                        </code></pre>
+                        <button class="copy-btn" data-code-target="weather">Copy Code</button>
+                    </div>
+                </div>
+
+                <!-- To-Do List -->
+                <div class="project-card">
+                    <img src="images/placeholder.jpg" alt="To-Do List">
+                    <h3>To-Do List Web App</h3>
+                    <p>Simple to-do list application with HTML, CSS, and JavaScript.</p>
+                    <div class="code-block">
+                        <pre><code class="language-html">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;To-Do List&lt;/title&gt;
+    &lt;style&gt;
+        .todo-app {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .todo-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .todo-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .todo-input button {
+            padding: 8px 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .todo-list {
+            list-style: none;
+            padding: 0;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: white;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+        .todo-item.completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        .todo-item button {
+            margin-left: auto;
+            padding: 4px 8px;
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="todo-app"&gt;
+        &lt;h1&gt;To-Do List&lt;/h1&gt;
+        &lt;div class="todo-input"&gt;
+            &lt;input type="text" id="todoInput" placeholder="Add a new task..."&gt;
+            &lt;button onclick="addTodo()"&gt;Add&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;ul class="todo-list" id="todoList"&gt;&lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;script&gt;
+        let todos = JSON.parse(localStorage.getItem('todos')) || [];
+
+        function renderTodos() {
+            const todoList = document.getElementById('todoList');
+            todoList.innerHTML = '';
+            
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+                li.innerHTML = `
+                    &lt;input type="checkbox" ${todo.completed ? 'checked' : ''} 
+                           onchange="toggleTodo(${index})"&gt;
+                    &lt;span&gt;${todo.text}&lt;/span&gt;
+                    &lt;button onclick="deleteTodo(${index})"&gt;Delete&lt;/button&gt;
+                `;
+                todoList.appendChild(li);
+            });
+            
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        function addTodo() {
+            const input = document.getElementById('todoInput');
+            const text = input.value.trim();
+            
+            if (text) {
+                todos.push({ text, completed: false });
+                input.value = '';
+                renderTodos();
+            }
+        }
+
+        function toggleTodo(index) {
+            todos[index].completed = !todos[index].completed;
+            renderTodos();
+        }
+
+        function deleteTodo(index) {
+            todos.splice(index, 1);
+            renderTodos();
+        }
+
+        // Initial render
+        renderTodos();
+
+        // Add keyboard support
+        document.getElementById('todoInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTodo();
+            }
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                        </code></pre>
+                        <button class="copy-btn" data-code-target="todo">Copy Code</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Shubhra Gautam. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
